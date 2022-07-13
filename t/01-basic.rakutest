@@ -1,0 +1,9 @@
+use from <Test &plan &pass &is-deeply &dies-ok>;
+
+plan 3;
+
+pass "exported pass ok";
+is-deeply MY::<&skip>, Nil, 'was &skip NOT imported';
+dies-ok { "ok 'foo', 'bar'".EVAL }, 'does calling ok fail';
+
+# vim: expandtab shiftwidth=4

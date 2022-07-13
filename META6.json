@@ -1,0 +1,25 @@
+{
+  "auth": "zef:lizmat",
+  "authors": [
+    "Elizabeth Mattijsen"
+  ],
+  "build-depends": [
+  ],
+  "depends": [
+  ],
+  "description": "load a module and import selected items from it",
+  "license": "Artistic-2.0",
+  "name": "from",
+  "perl": "6.d",
+  "provides": {
+    "from": "lib/from.rakumod"
+  },
+  "resources": [
+  ],
+  "source-url": "https://github.com/lizmat/from.git",
+  "tags": [
+  ],
+  "test-depends": [
+  ],
+  "version": "0.0.1"
+}
