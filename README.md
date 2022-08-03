@@ -13,6 +13,8 @@ use from <Test &plan &ok>;  # only import "plan" and "ok"
 
 plan 1;
 ok "foo", "bar";  # ok 1 - bar
+
+use from "Foo";  # use Foo, but don't import anything
 ```
 
 DESCRIPTION

@@ -1,9 +1,19 @@
-use from <Test &plan &pass &is-deeply &dies-ok>;
+my constant @importables = <&plan &pass &is-deeply &dies-ok>;
+use from "Test", @importables;
 
-plan 3;
+plan 7;
 
 pass "exported pass ok";
 is-deeply MY::<&skip>, Nil, 'was &skip NOT imported';
 dies-ok { "ok 'foo', 'bar'".EVAL }, 'does calling ok fail';
+
+# separate scope for importing
+{
+    use from "Test";
+    for @importables {
+        is-deeply MY::{$_}, Nil, "was $_ NOT imported";
+    }
+}
+
 
 # vim: expandtab shiftwidth=4

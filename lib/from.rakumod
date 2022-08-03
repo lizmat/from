@@ -1,5 +1,11 @@
 sub EXPORT($distro, *@exports) {
-    Map.new: ("use $distro; MY::<@exports[]>:p".EVAL if @exports)
+    if @exports {
+        Map.new: ("use $distro; MY::<@exports[]>:p".EVAL)
+    }
+    else {
+        "use $distro".EVAL;
+        BEGIN Map.new
+    }
 }
 
 =begin pod
@@ -16,6 +22,8 @@ use from <Test &plan &ok>;  # only import "plan" and "ok"
 
 plan 1;
 ok "foo", "bar";  # ok 1 - bar
+
+use from "Foo";  # use Foo, but don't import anything
 
 =end code
 

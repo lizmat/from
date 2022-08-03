@@ -2,5 +2,8 @@ Revision history for from
 
 {{$NEXT}}
 
+0.0.2  2022-08-03T10:28:26+02:00
+    - Allow for no imports at all
+
 0.0.1  2022-07-13T14:00:13+02:00
     - Initial version
