@@ -1,13 +1,13 @@
 my constant @importables = <&plan &pass &is-deeply &dies-ok>;
 use from "Test", @importables;
 
-plan 7;
+plan 9;
 
 pass "exported pass ok";
 is-deeply MY::<&skip>, Nil, 'was &skip NOT imported';
 dies-ok { "ok 'foo', 'bar'".EVAL }, 'does calling ok fail';
 
-# separate scope for importing
+# separate scope for importing nothing
 {
     use from "Test";
     for @importables {
@@ -15,5 +15,11 @@ dies-ok { "ok 'foo', 'bar'".EVAL }, 'does calling ok fail';
     }
 }
 
+# separate scope for exclusive importing
+{
+    use from <Test ! &skip>;
+    is-deeply MY::<&skip>, Nil, 'was &skip still NOT imported';
+    is MY::<&isnt>.name, 'isnt', 'was &isnt imported';
+}
 
 # vim: expandtab shiftwidth=4

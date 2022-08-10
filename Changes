@@ -2,6 +2,9 @@ Revision history for from
 
 {{$NEXT}}
 
+0.0.3  2022-08-10T10:57:57+02:00
+    - Allow importing everything except: (list)
+
 0.0.2  2022-08-03T10:28:26+02:00
     - Allow for no imports at all
 

@@ -1,6 +1,16 @@
-sub EXPORT($distro, *@exports) {
+sub EXPORT($distro, *@exports is copy) {
     if @exports {
-        Map.new: ("use $distro; MY::<@exports[]>:p".EVAL)
+        if @exports.head eq "!" {
+            @exports.shift;
+            @exports.prepend: <EXPORT ::?PACKAGE $_ $?PACKAGE>;
+
+            Map.new: ("use $distro; MY::\{MY::.keys.map(\{
+                \$_ unless \$_ (elem) @exports
+            })}:p".EVAL)
+        }
+        else {
+            Map.new: ("use $distro; MY::<@exports[]>:p".EVAL)
+        }
     }
     else {
         "use $distro".EVAL;
@@ -25,6 +35,8 @@ ok "foo", "bar";  # ok 1 - bar
 
 use from "Foo";  # use Foo, but don't import anything
 
+use from <Test ! &skip>;  # import everything *except* skip
+
 =end code
 
 =head1 DESCRIPTION
@@ -34,6 +46,16 @@ only import selected items from whatever that module imports.  This can
 be helpful when there is a conflict between different modules exporting
 something with the same name (such as C<skip> in the Raku core, and the
 C<skip> subroutine provided by C<Test>.
+
+The first argument indicates the name of the module to be loaded.  If
+it is the only argument, then the module will be loaded without doing
+B<any> of its imports (which is basically the same as C<need>).
+
+If the second argument is a sole exclamation mark, it indicates that
+the rest of the arguments are items that should B<not> be imported.
+
+The rest of the arguments indicate the items that should (not) be
+imported.
 
 =head1 AUTHOR
 
